@@ -44,8 +44,7 @@ func main() {
 
 	// Create gRPC server with OpenTelemetry interceptor
 	grpcServer := grpc.NewServer(
-		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
-		grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()),
+		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 	)
 	exchangeService := service.NewExchangeServer(logger.Log)
 	pb.RegisterExchangeServiceServer(grpcServer, exchangeService)

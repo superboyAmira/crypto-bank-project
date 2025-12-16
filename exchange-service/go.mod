@@ -6,6 +6,10 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/prometheus/client_golang v1.18.0
 	github.com/rabbitmq/amqp091-go v1.9.0
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.58.0
+	go.opentelemetry.io/otel v1.33.0
+	go.opentelemetry.io/otel/exporters/zipkin v1.33.0
+	go.opentelemetry.io/otel/sdk v1.33.0
 	go.uber.org/zap v1.26.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.10

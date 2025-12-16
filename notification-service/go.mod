@@ -3,10 +3,13 @@ module github.com/crypto-bank/notification-service
 go 1.24
 
 require (
-	go.uber.org/zap v1.26.0
-	github.com/rabbitmq/amqp091-go v1.9.0
-	github.com/prometheus/client_golang v1.18.0
 	github.com/gofiber/fiber/v2 v2.52.0
+	github.com/prometheus/client_golang v1.18.0
+	github.com/rabbitmq/amqp091-go v1.9.0
+	go.opentelemetry.io/otel v1.33.0
+	go.opentelemetry.io/otel/exporters/zipkin v1.33.0
+	go.opentelemetry.io/otel/sdk v1.33.0
+	go.uber.org/zap v1.26.0
 )
 
 require (
