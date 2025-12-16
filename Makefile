@@ -94,3 +94,23 @@ api-stats:
 api-notifications:
 	@curl -s http://localhost:8083/api/v1/notifications | jq
 
+# Windows build commands (for local development without Docker)
+build-windows:
+	@echo "Building bank-service for Windows..."
+	cd bank-service && set CGO_ENABLED=0 && set GOOS=windows && go build -ldflags="-w -s" -o main.exe ./cmd/server
+	@echo "Building exchange-service for Windows..."
+	cd exchange-service && set CGO_ENABLED=0 && set GOOS=windows && go build -ldflags="-w -s" -o main.exe ./cmd/server
+	@echo "Building analytics-service for Windows..."
+	cd analytics-service && set CGO_ENABLED=0 && set GOOS=windows && go build -ldflags="-w -s" -o main.exe ./cmd/server
+	@echo "Building notification-service for Windows..."
+	cd notification-service && set CGO_ENABLED=0 && set GOOS=windows && go build -ldflags="-w -s" -o main.exe ./cmd/server
+
+build-linux:
+	@echo "Building bank-service for Linux..."
+	cd bank-service && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o main ./cmd/server
+	@echo "Building exchange-service for Linux..."
+	cd exchange-service && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o main ./cmd/server
+	@echo "Building analytics-service for Linux..."
+	cd analytics-service && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o main ./cmd/server
+	@echo "Building notification-service for Linux..."
+	cd notification-service && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o main ./cmd/server
