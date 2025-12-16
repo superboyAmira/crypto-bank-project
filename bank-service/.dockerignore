@@ -1,0 +1,10 @@
+bin/
+*.log
+.env
+.git/
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+go.sum
+
