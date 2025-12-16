@@ -1,0 +1,70 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# Documentation
+*.md
+README*
+SETUP*
+QUICK_START*
+LICENSE
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test files
+*_test.go
+test/
+tests/
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+main
+main.exe
+
+# Dependencies (will be downloaded during build)
+vendor/
+
+# Environment
+.env
+.env.*
+env.example
+
+# CI/CD
+.github/
+Jenkinsfile
+.gitlab-ci.yml
+
+# Monitoring configs (not needed in containers)
+prometheus.yml
+grafana/
+
+# Scripts
+*.bat
+*.sh
+Makefile
+
+# Temporary files
+tmp/
+temp/
+

@@ -6,12 +6,15 @@ WORKDIR /app
 # Install dependencies
 RUN apk add --no-cache git protobuf-dev ca-certificates
 
-# Install protoc-gen-go (specific versions compatible with Go 1.23)
-RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+# Install protoc-gen-go (compatible with Go 1.24)
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.35.2
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
 
 # Copy go mod files
 COPY go.mod go.sum* ./
+
+# Download dependencies first
+RUN go mod download
 
 # Copy source code
 COPY . .
@@ -21,10 +24,8 @@ RUN protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
     proto/exchange.proto || true
 
-# Download dependencies and build
-RUN go mod download && \
-    go mod tidy && \
-    CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o main ./cmd/server
+# Build for Linux
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main ./cmd/server
 
 # Final stage
 FROM alpine:latest
