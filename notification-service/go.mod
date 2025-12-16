@@ -1,6 +1,6 @@
 module github.com/crypto-bank/notification-service
 
-go 1.23
+go 1.24
 
 require (
 	go.uber.org/zap v1.26.0

@@ -13,9 +13,6 @@ RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
 # Copy go mod files
 COPY go.mod go.sum* ./
 
-# Download dependencies first
-RUN go mod download
-
 # Copy source code
 COPY . .
 
@@ -23,6 +20,9 @@ COPY . .
 RUN protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
     proto/exchange.proto || true
+
+# Download dependencies and tidy
+RUN go mod download && go mod tidy
 
 # Build for Linux
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main ./cmd/server
