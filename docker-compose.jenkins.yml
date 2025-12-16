@@ -1,6 +1,9 @@
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    image: crypto-bank-jenkins:latest
     container_name: crypto_bank_jenkins
     privileged: true
     user: root
