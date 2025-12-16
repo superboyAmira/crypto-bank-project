@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package exchange;
+
+option go_package = "github.com/crypto-bank/exchange-service/proto";
+
+// ExchangeService provides currency exchange operations
+service ExchangeService {
+  // GetExchangeRate returns the current exchange rate between two currencies
+  rpc GetExchangeRate(ExchangeRateRequest) returns (ExchangeRateResponse);
+  
+  // GetAllRates returns all available exchange rates
+  rpc GetAllRates(Empty) returns (AllRatesResponse);
+  
+  // UpdateRate updates an exchange rate (admin only)
+  rpc UpdateRate(UpdateRateRequest) returns (UpdateRateResponse);
+}
+
+message Empty {}
+
+message ExchangeRateRequest {
+  string from_currency = 1;
+  string to_currency = 2;
+}
+
+message ExchangeRateResponse {
+  string from_currency = 1;
+  string to_currency = 2;
+  double rate = 3;
+  int64 timestamp = 4;
+}
+
+message AllRatesResponse {
+  repeated ExchangeRateResponse rates = 1;
+}
+
+message UpdateRateRequest {
+  string from_currency = 1;
+  string to_currency = 2;
+  double rate = 3;
+}
+
+message UpdateRateResponse {
+  bool success = 1;
+  string message = 2;
+}
+
