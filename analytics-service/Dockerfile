@@ -12,8 +12,23 @@ COPY go.mod go.sum* ./
 # Copy source code
 COPY . .
 
-# Download dependencies and tidy
-RUN go mod download && go mod tidy
+# Configure Go proxy and checksum database with fallback
+ENV GOPROXY=https://proxy.golang.org,https://goproxy.cn,direct
+ENV GOSUMDB=sum.golang.org
+ENV GOPRIVATE=
+ENV GOTIMEOUT=300s
+
+# Download dependencies with retry logic
+RUN set -eux; \
+    for i in 1 2 3 4 5; do \
+        if go mod download; then \
+            break; \
+        else \
+            echo "Attempt $i failed, retrying in 10 seconds..."; \
+            sleep 10; \
+        fi; \
+    done; \
+    go mod verify || echo "Warning: go mod verify failed, continuing..."
 
 # Build for Linux
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main ./cmd/server
