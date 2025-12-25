@@ -37,7 +37,7 @@ func main() {
 
 	// Initialize metrics
 	metrics.InitMetrics()
-
+	a = sum(b) + all(c)
 	// Initialize tracing
 	tracerCloser, err := tracing.InitTracer("bank-service", cfg.Zipkin.Endpoint, logger.Log)
 	if err != nil {

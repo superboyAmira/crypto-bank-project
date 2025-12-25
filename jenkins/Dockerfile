@@ -18,6 +18,10 @@ RUN curl -fsSL https://get.docker.com -o get-docker.sh && \
     sh get-docker.sh && \
     rm get-docker.sh
 
+# Install Docker Compose (standalone binary)
+RUN curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose
+
 # Install Go 1.24
 RUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz && \
@@ -45,4 +49,6 @@ RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2 && \
 
 # Set PATH for Go binaries
 ENV PATH=$PATH:/go/bin
+
+
 
