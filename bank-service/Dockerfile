@@ -21,13 +21,21 @@ COPY go.sum* ./
 COPY . .
 
 # Download dependencies with retry logic
-# Skip checksum verification for test dependencies if it fails
 RUN set -eux; \
     for i in 1 2 3 4 5; do \
         if go mod download; then \
             break; \
         else \
-            echo "Attempt $i failed, retrying in 10 seconds..."; \
+            echo "Download attempt $i failed, retrying in 10 seconds..."; \
+            sleep 10; \
+        fi; \
+    done; \
+    echo "Running go mod tidy..."; \
+    for i in 1 2 3 4 5; do \
+        if go mod tidy; then \
+            break; \
+        else \
+            echo "Tidy attempt $i failed, retrying in 10 seconds..."; \
             sleep 10; \
         fi; \
     done; \
